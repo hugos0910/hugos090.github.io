@@ -1,11 +1,21 @@
 ---
-layout: default
+layout: page
 ---
 
-<div>
+{% unless page.content == '' %}
+  {{ content }}
+{% endunless %}
 
-{{ content }}
-
-{% include list-category-posts.html lang=page.lang category=page.category %}
-
-</div>
+<ul class="posts-list">
+  {% assign category = page.category | default: page.title %}
+  {% for post in site.categories[category] %}
+    <li>
+      <h3>
+        <a href="{{ site.baseurl }}{{ post.url }}">
+          {{ post.title }}
+          <small>{{ post.date | date_to_string }}</small>
+        </a>
+      </h3>
+    </li>
+  {% endfor %}
+</ul>
